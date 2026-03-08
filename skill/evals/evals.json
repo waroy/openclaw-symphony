@@ -30,6 +30,12 @@
       "prompt": "You are coordinating Symphony for me, not just launching it. Start the workflow, monitor it with OpenClaw-native follow-up checks, and proactively tell me when a ticket completes, gets blocked, or needs my decision.",
       "expected_output": "Treats monitoring as part of the task, sets up sane follow-up checks instead of a tight poll loop, and reports meaningful state changes without waiting for the user to ask.",
       "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Symphony is actively processing a ticket internally, but Linear still shows the ticket as Todo. Report status accurately so I can tell the difference between Symphony runtime state and tracker state.",
+      "expected_output": "Explicitly separates Symphony runtime status from tracker status, flags the mismatch, and avoids claiming the ticket is fully in progress unless both states agree or the distinction is stated clearly.",
+      "files": []
     }
   ]
 }

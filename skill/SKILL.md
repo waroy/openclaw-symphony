@@ -131,13 +131,19 @@ After startup:
 
 Each monitoring pass should inspect enough state to answer:
 - is Symphony still running?
-- which issue is active now?
+- which issue is active now in Symphony runtime terms?
+- what does the tracker currently show for that issue?
 - did an issue move to `Done`, `Canceled`, or another meaningful state?
 - did a new issue start automatically?
 - is there a blocker, stall, or drift from the agreed plan?
 
+Always compare runtime state vs tracker state.
+If Symphony is actively processing an issue but the tracker still says `Todo`, report that explicitly as a mismatch instead of claiming the ticket is fully `In Progress`.
+If the tracker moved but Symphony is idle or unhealthy, report that mismatch too.
+
 Proactively update the user when there is a meaningful change:
-- ticket completed
+- ticket completed in both runtime and tracker terms
+- runtime/tracker mismatch detected
 - ticket blocked
 - decision needed
 - unexpected backlog movement
@@ -156,6 +162,20 @@ Use a short readiness conclusion such as:
 - ready for real tracker-driven development runs
 
 Be explicit about what is still missing.
+
+### 5a. Use precise state language
+
+When you say "status" in a Symphony coordination context, default to meaning **Symphony runtime status** unless you explicitly say "tracker status" or "Linear status".
+
+Preferred phrasing examples:
+- "Symphony runtime: processing OPE-15; Tracker: still Todo"
+- "Symphony runtime: idle; Tracker: OPE-15 is In Progress"
+- "Symphony runtime and tracker both show OPE-15 Done"
+
+Avoid ambiguous claims like:
+- "OPE-15 was picked up" when only runtime state proves that
+- "OPE-15 is In Progress" when Linear still shows `Todo`
+- "completed" when only a command finished inside Symphony but the ticket lifecycle is not yet complete
 
 ## Common tasks this skill should handle
 
@@ -213,6 +233,7 @@ If Symphony is not doing work, use this order:
 - distinguish between: tracker query failing, no eligible issues, or issues present but outside active states
 - check whether Codex can launch
 - inspect logs and status surfaces
+- explicitly distinguish runtime/tracker mismatch from true inactivity
 - report the first real blocker, not a vague guess
 
 ## Constraints
@@ -226,8 +247,16 @@ If Symphony is not doing work, use this order:
 
 Prefer concise, operator-style outputs.
 
+When reporting status, separate these explicitly:
+- **Symphony runtime status** — what Symphony is currently processing internally
+- **Tracker status** — what Linear or the external tracker currently shows
+
+Do not collapse them into one vague word like "started", "picked up", or "in progress" unless both are actually aligned.
+If they differ, say so plainly.
+
 Use this shape when helpful:
-- status
+- symphony runtime status
+- tracker status
 - action taken
 - current access path
 - blockers
