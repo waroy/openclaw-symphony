@@ -24,6 +24,12 @@
       "prompt": "I already have a valid LINEAR_API_KEY on this machine. Create the Linear project for my app if permissions allow, tell me the exact project slug, and wire Symphony to use it instead of making me do the setup manually.",
       "expected_output": "Uses the available Linear API access to inspect teams, create or confirm the target project when permitted, returns the exact slug, and updates the Symphony wiring accordingly instead of stopping at generic instructions.",
       "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "You are coordinating Symphony for me, not just launching it. Start the workflow, monitor it with OpenClaw-native follow-up checks, and proactively tell me when a ticket completes, gets blocked, or needs my decision.",
+      "expected_output": "Treats monitoring as part of the task, sets up sane follow-up checks instead of a tight poll loop, and reports meaningful state changes without waiting for the user to ask.",
+      "files": []
     }
   ]
 }

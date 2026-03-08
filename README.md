@@ -9,6 +9,7 @@ This repo packages an OpenClaw-specific skill that teaches an agent how to:
 - wire tracker credentials and repo-specific workflow config
 - create or edit a real `WORKFLOW.md`
 - run and expose the Symphony dashboard
+- monitor active Symphony runs and proactively report meaningful status changes
 - troubleshoot why Symphony is running but not actually doing development work
 
 ## Who this is for

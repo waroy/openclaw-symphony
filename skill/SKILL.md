@@ -18,6 +18,7 @@ Help OpenClaw turn Symphony into a usable development orchestrator on the curren
 - creating or wiring the tracker project when the API/auth already permits it
 - drafting or editing `WORKFLOW.md`
 - starting or exposing the dashboard
+- monitoring active Symphony runs after startup
 - reporting the exact blockers to autonomous development runs
 
 ## Default posture
@@ -114,8 +115,37 @@ When starting Symphony:
 - choose a clear logs location when helpful
 - enable the dashboard only when useful to the user
 - report the local bind address and any remote access mapping
+- if you are acting as coordinator, monitoring is part of the start procedure, not a separate optional step
 
 If exposing the dashboard remotely, prefer already-approved local infrastructure such as Tailscale instead of opening public internet access by default.
+
+### 4a. Monitor active runs like a coordinator
+
+If the user expects OpenClaw to coordinate Symphony work, do not just launch Symphony and disappear.
+
+After startup:
+- verify the intended project and first claimable issue were actually picked up
+- capture the initial state (active issue, issue states, process status, dashboard bind)
+- create lightweight follow-up monitoring using OpenClaw-native scheduling such as `cron` when useful
+- avoid tight polling loops; prefer a sane cadence (for example: immediate check, then 10 minutes, then every 20-30 minutes while work is active)
+
+Each monitoring pass should inspect enough state to answer:
+- is Symphony still running?
+- which issue is active now?
+- did an issue move to `Done`, `Canceled`, or another meaningful state?
+- did a new issue start automatically?
+- is there a blocker, stall, or drift from the agreed plan?
+
+Proactively update the user when there is a meaningful change:
+- ticket completed
+- ticket blocked
+- decision needed
+- unexpected backlog movement
+- Symphony stopped or unhealthy
+
+Do not spam the user with empty "still running" updates.
+Do not wait silently after starting a long-running autonomous workflow.
+If monitoring is requested, treat missed status reporting as a failure of coordination, not as acceptable default behavior.
 
 ### 5. Report readiness honestly
 
