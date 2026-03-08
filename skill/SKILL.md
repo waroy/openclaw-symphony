@@ -15,6 +15,7 @@ Help OpenClaw turn Symphony into a usable development orchestrator on the curren
 - checking installation state
 - checking Codex readiness
 - checking tracker / workflow readiness
+- creating or wiring the tracker project when the API/auth already permits it
 - drafting or editing `WORKFLOW.md`
 - starting or exposing the dashboard
 - reporting the exact blockers to autonomous development runs
@@ -40,6 +41,7 @@ Start by checking the practical prerequisites:
 - Is Codex installed and authenticated?
 - Is there a real repo-specific `WORKFLOW.md`?
 - Are tracker credentials present?
+- Can those credentials create or inspect the required tracker project?
 - Is a dashboard already running?
 - Is the requested repo / project actually wired into Symphony yet?
 
@@ -49,6 +51,7 @@ Summarize findings in a compact status table or bullet list.
 
 Name concrete blockers explicitly when present:
 - missing `LINEAR_API_KEY`
+- Linear API key present but insufficient for project creation or inspection
 - placeholder or wrong `project_slug`
 - stock demo `WORKFLOW.md` still in use
 - dashboard running but repo not actually wired
@@ -62,6 +65,7 @@ Route the task into one of these buckets:
 
 - **Install**: Symphony or its runtime is missing
 - **Configure**: dependencies exist but tracker / workflow / workspace config is incomplete
+- **Provision tracker**: the user wants the Linear project/slug created or confirmed from available API access
 - **Operate**: Symphony exists and should be started, restarted, or exposed
 - **Troubleshoot**: Symphony runs but does not claim work, start agents, or expose the dashboard correctly
 - **Design workflow**: user wants a repo-specific `WORKFLOW.md` and operating model
@@ -81,6 +85,27 @@ Draft or edit a `WORKFLOW.md` that is specific to the target repo and environmen
 `WORKFLOW.md` should normally live in or alongside the repo / deployment path that Symphony is actually started from, not just anywhere a copy happens to exist.
 
 If critical information is missing, ask only for the minimum missing values.
+
+### 3a. Provision the Linear project when possible
+
+If the user wants Symphony to run against a brand-new Linear project and a valid Linear API key is already available, prefer creating the project instead of bouncing the task back to the user.
+
+Use this order:
+- verify the API key exists and can successfully query the current viewer / teams
+- discover the intended Linear team when it is unambiguous; ask only if multiple plausible teams exist
+- create the project through Linear's GraphQL API when project-creation permissions are present
+- capture and report the resulting project name, id, and slug
+- wire that slug into the repo-specific `WORKFLOW.md`
+
+Be careful not to assume success from the mere presence of `LINEAR_API_KEY`.
+Actually test whether the key can:
+- read teams
+- inspect projects
+- create a project
+
+If creation fails, report the exact API blocker (permissions, bad key, missing team choice, validation error) instead of saying vaguely that Linear is not configured.
+
+If the project already exists, reuse it and avoid creating duplicates.
 
 ### 4. Start carefully
 
@@ -124,7 +149,20 @@ Check:
 For a new target repo, produce a `WORKFLOW.md` that includes:
 - YAML front matter for tracker / workspace / hooks / agent / codex
 - a prompt body that tells the agent how to work tickets in that repo
+- a real project slug when available from Linear, not a placeholder demo slug
 - realistic defaults, not placeholder values where avoidable
+
+### Provision a Linear project
+
+When the user asks you to create the Linear project or asks whether the API key is enough:
+- treat that as an execution task, not a theoretical Q&A task
+- verify the key against `https://api.linear.app/graphql`
+- discover the team id/name first
+- create the project if permissions allow
+- return the exact resulting project URL / slug
+- then continue wiring Symphony to use that project
+
+Do not claim the user must create the project manually unless you have actually tested the API path or the user explicitly wants to do it themselves.
 
 ### Operate the dashboard
 
@@ -139,6 +177,7 @@ When the user asks for access to the dashboard:
 If Symphony is not doing work, use this order:
 - validate workflow parse / startup validity
 - validate tracker credentials
+- validate whether the API key can read the intended team/project and create one when needed
 - validate project slug and configured active states
 - confirm whether eligible issues actually exist
 - distinguish between: tracker query failing, no eligible issues, or issues present but outside active states

@@ -18,6 +18,12 @@
       "prompt": "Symphony starts but never picks up development work from Linear. Figure out whether the problem is tracker auth, workflow config, issue states, or Codex startup, and tell me the first real blocker.",
       "expected_output": "Runs a troubleshooting flow against Symphony's real dependencies and surfaces the first concrete blocker instead of giving generic advice.",
       "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I already have a valid LINEAR_API_KEY on this machine. Create the Linear project for my app if permissions allow, tell me the exact project slug, and wire Symphony to use it instead of making me do the setup manually.",
+      "expected_output": "Uses the available Linear API access to inspect teams, create or confirm the target project when permitted, returns the exact slug, and updates the Symphony wiring accordingly instead of stopping at generic instructions.",
+      "files": []
     }
   ]
 }

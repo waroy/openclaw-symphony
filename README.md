@@ -5,6 +5,7 @@ Open-source OpenClaw skill for using OpenAI Symphony as a practical development 
 This repo packages an OpenClaw-specific skill that teaches an agent how to:
 - install or verify Symphony
 - verify Codex readiness
+- use a Linear API key to inspect or create the target project when permissions allow
 - wire tracker credentials and repo-specific workflow config
 - create or edit a real `WORKFLOW.md`
 - run and expose the Symphony dashboard
@@ -29,6 +30,8 @@ You will still need your own environment-specific setup for things like:
 - target repository wiring
 - `WORKFLOW.md`
 - dashboard exposure
+
+If the Linear API key already has enough permissions, the skill should prefer creating or confirming the project for you instead of stopping at generic advice.
 
 ## License
 
