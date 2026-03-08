@@ -33,8 +33,8 @@
     },
     {
       "id": 6,
-      "prompt": "Symphony is actively processing a ticket internally, but Linear still shows the ticket as Todo. Report status accurately so I can tell the difference between Symphony runtime state and tracker state.",
-      "expected_output": "Explicitly separates Symphony runtime status from tracker status, flags the mismatch, and avoids claiming the ticket is fully in progress unless both states agree or the distinction is stated clearly.",
+      "prompt": "Symphony is actively processing a ticket internally, but Linear still shows the ticket as Todo. Keep the status report simple for me, but make sure the skill's internal definition of status is careful enough that it doesn't say something false.",
+      "expected_output": "Uses careful internal state definitions, defaults user-facing status to the Symphony view, and mentions the tracker mismatch only if it materially affects the conclusion or requires intervention.",
       "files": []
     }
   ]

@@ -137,17 +137,16 @@ Each monitoring pass should inspect enough state to answer:
 - did a new issue start automatically?
 - is there a blocker, stall, or drift from the agreed plan?
 
-Always compare runtime state vs tracker state.
-If Symphony is actively processing an issue but the tracker still says `Todo`, report that explicitly as a mismatch instead of claiming the ticket is fully `In Progress`.
-If the tracker moved but Symphony is idle or unhealthy, report that mismatch too.
+Internally, always compare runtime state vs tracker state so you do not reason from stale or misleading tracker data.
+Use that distinction to stay accurate, but do not force the user to care about it unless the mismatch actually matters for coordination, user decisions, or trust in the report.
 
 Proactively update the user when there is a meaningful change:
-- ticket completed in both runtime and tracker terms
-- runtime/tracker mismatch detected
+- ticket completed
 - ticket blocked
 - decision needed
 - unexpected backlog movement
 - Symphony stopped or unhealthy
+- runtime/tracker mismatch only when it materially affects what the user should believe or do
 
 Do not spam the user with empty "still running" updates.
 Do not wait silently after starting a long-running autonomous workflow.
@@ -163,19 +162,23 @@ Use a short readiness conclusion such as:
 
 Be explicit about what is still missing.
 
-### 5a. Use precise state language
+### 5a. Use precise state definitions
 
-When you say "status" in a Symphony coordination context, default to meaning **Symphony runtime status** unless you explicitly say "tracker status" or "Linear status".
+Internally, define states carefully:
+- `status` defaults to **Symphony runtime status**
+- `tracker status` or `Linear status` refers to the external ticket system
 
-Preferred phrasing examples:
-- "Symphony runtime: processing OPE-15; Tracker: still Todo"
-- "Symphony runtime: idle; Tracker: OPE-15 is In Progress"
-- "Symphony runtime and tracker both show OPE-15 Done"
+Use the distinction to reason correctly and to avoid false claims.
+But user-facing replies should stay simple unless the distinction matters.
+
+Preferred behavior:
+- default to reporting the Symphony view as "status"
+- mention tracker/Linear state only when it changes the correct conclusion, reveals a blocker, or explains confusing behavior
 
 Avoid ambiguous claims like:
-- "OPE-15 was picked up" when only runtime state proves that
-- "OPE-15 is In Progress" when Linear still shows `Todo`
-- "completed" when only a command finished inside Symphony but the ticket lifecycle is not yet complete
+- "picked up" when only a partial internal signal exists
+- "in progress" when the only proof is a single finished command
+- "completed" when only a sub-step finished inside Symphony but the ticket lifecycle is not yet complete
 
 ## Common tasks this skill should handle
 
@@ -233,7 +236,7 @@ If Symphony is not doing work, use this order:
 - distinguish between: tracker query failing, no eligible issues, or issues present but outside active states
 - check whether Codex can launch
 - inspect logs and status surfaces
-- explicitly distinguish runtime/tracker mismatch from true inactivity
+- internally distinguish runtime/tracker mismatch from true inactivity so external status reports stay accurate
 - report the first real blocker, not a vague guess
 
 ## Constraints
@@ -247,16 +250,13 @@ If Symphony is not doing work, use this order:
 
 Prefer concise, operator-style outputs.
 
-When reporting status, separate these explicitly:
-- **Symphony runtime status** — what Symphony is currently processing internally
-- **Tracker status** — what Linear or the external tracker currently shows
+Use internally precise state definitions, but keep user-facing status simple by default.
+Unless the distinction matters, report the Symphony view as the main status and avoid dragging the user through tracker/runtime details.
 
-Do not collapse them into one vague word like "started", "picked up", or "in progress" unless both are actually aligned.
-If they differ, say so plainly.
+Mention tracker/Linear state only when it materially changes the conclusion, explains confusing behavior, or requires intervention.
 
 Use this shape when helpful:
-- symphony runtime status
-- tracker status
+- status
 - action taken
 - current access path
 - blockers
