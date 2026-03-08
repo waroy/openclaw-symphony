@@ -48,6 +48,12 @@
       "prompt": "I don't want to remind you. If you're coordinating Symphony, treat it as an ongoing heartbeat/task-file responsibility, and only use cron if exact timing is actually needed.",
       "expected_output": "Prefers heartbeat/task-file-backed continuity for ongoing Symphony supervision, keeps no-change runs quiet, checks runtime plus latest comments/workpad, and uses cron only as a supplement when stricter scheduling is required.",
       "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "The dashboard looks idle, Linear looks stale, but the latest issue comment says compile just succeeded and the ticket is about to be closed. Use the right source-of-truth order and give me the correct conclusion without overexplaining.",
+      "expected_output": "Uses the latest meaningful issue comment/workpad as the primary status source, avoids being misled by lagging dashboard or tracker signals, and gives a simple correct operator conclusion.",
+      "files": []
     }
   ]
 }

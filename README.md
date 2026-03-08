@@ -13,6 +13,11 @@ This repo packages an OpenClaw-specific skill that teaches an agent how to:
 - check the latest issue comment/workpad during monitoring so blocker/access notes are not missed
 - use heartbeat/task-file-backed monitoring by default when the user wants automatic follow-up without reminders, with cron as a supplement when exact timing matters
 - use careful internal state definitions so status reports stay accurate without forcing the user to care about runtime-vs-tracker details unless that difference matters
+
+The skill has been iteratively tightened against real operator failures, especially:
+- missing completion notifications because monitoring was only manual
+- missing blockers because the latest issue comment/workpad was not checked
+- confusing status reports caused by mixing runtime state and tracker state too casually
 - troubleshoot why Symphony is running but not actually doing development work
 
 ## Who this is for

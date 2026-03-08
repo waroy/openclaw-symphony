@@ -134,6 +134,12 @@ After startup:
 - keep heartbeat-style continuity in mind: monitoring should persist as an ongoing operational responsibility, not as a one-off check
 - avoid tight polling loops; prefer sane re-check behavior rather than spammy liveness chatter
 
+Use this monitoring source-of-truth order:
+1. latest meaningful issue comment/workpad
+2. Symphony runtime/dashboard/log state
+3. tracker state in Linear
+
+Reason: the latest comment/workpad often carries the freshest actionable truth (access request, validation result, handoff note, blocker), while dashboard and tracker state can lag or be too shallow on their own.
 Each monitoring pass should inspect enough state to answer:
 - is Symphony still running?
 - which issue is active now in Symphony runtime terms?
@@ -257,6 +263,10 @@ If the user wants automatic follow-up without having to remind OpenClaw:
 - compare against a persisted previous snapshot when possible so repeated wakeups do not produce duplicate noise
 - use a cron-backed monitor only when exact timing matters or when you need a stronger scheduling guarantee than heartbeat alone provides
 
+Decision rule:
+- Heartbeat/task file = ongoing agent responsibility
+- Cron = exact scheduling supplement
+- Manual recheck = one-off debugging or user-requested spot check
 The monitor/supervisor should check, at minimum:
 - Symphony runtime health
 - active issue / next issue
