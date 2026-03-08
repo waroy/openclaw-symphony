@@ -133,12 +133,14 @@ Each monitoring pass should inspect enough state to answer:
 - is Symphony still running?
 - which issue is active now in Symphony runtime terms?
 - what does the tracker currently show for that issue?
+- what does the latest issue comment / workpad comment say?
 - did an issue move to `Done`, `Canceled`, or another meaningful state?
 - did a new issue start automatically?
 - is there a blocker, stall, or drift from the agreed plan?
 
 Internally, always compare runtime state vs tracker state so you do not reason from stale or misleading tracker data.
-Use that distinction to stay accurate, but do not force the user to care about it unless the mismatch actually matters for coordination, user decisions, or trust in the report.
+Also check the latest issue comment / workpad comment before telling the user there is no blocker or no action needed; the comment may contain the freshest status, access request, validation note, or handoff summary.
+Use these distinctions to stay accurate, but do not force the user to care about them unless they materially affect coordination, user decisions, or trust in the report.
 
 Proactively update the user when there is a meaningful change:
 - ticket completed
@@ -146,6 +148,7 @@ Proactively update the user when there is a meaningful change:
 - decision needed
 - unexpected backlog movement
 - Symphony stopped or unhealthy
+- latest comment/workpad adds a material blocker, access request, or handoff note
 - runtime/tracker mismatch only when it materially affects what the user should believe or do
 
 Do not spam the user with empty "still running" updates.
@@ -167,17 +170,21 @@ Be explicit about what is still missing.
 Internally, define states carefully:
 - `status` defaults to **Symphony runtime status**
 - `tracker status` or `Linear status` refers to the external ticket system
+- `comment status` means the newest meaningful information recorded in the issue comment/workpad stream
 
 Use the distinction to reason correctly and to avoid false claims.
 But user-facing replies should stay simple unless the distinction matters.
 
 Preferred behavior:
 - default to reporting the Symphony view as "status"
+- check the latest issue comment/workpad before concluding there is no blocker or no action needed
 - mention tracker/Linear state only when it changes the correct conclusion, reveals a blocker, or explains confusing behavior
+- mention comment/workpad state when it contains the freshest blocker, access request, validation result, or handoff note
 
 Avoid ambiguous claims like:
 - "picked up" when only a partial internal signal exists
 - "in progress" when the only proof is a single finished command
+- "no blocker" when the latest comment actually asks for access or reports a failed validation
 - "completed" when only a sub-step finished inside Symphony but the ticket lifecycle is not yet complete
 
 ## Common tasks this skill should handle
@@ -225,6 +232,18 @@ When the user asks for access to the dashboard:
 - return the exact URL
 - mention whether it is tailnet-only or public
 
+### Read the issue comment/workpad when monitoring
+
+When coordinating active Symphony work, do not rely only on process state and ticket state.
+Check the latest issue comment/workpad because it often contains the most actionable current status:
+- access requests
+- validation failures
+- handoff summaries
+- explicit blockers
+- notes about why the state has not moved yet
+
+If the latest meaningful comment changes the correct conclusion, it should override a shallow read of the runtime dashboard.
+
 ### Troubleshoot orchestration
 
 If Symphony is not doing work, use this order:
@@ -236,6 +255,7 @@ If Symphony is not doing work, use this order:
 - distinguish between: tracker query failing, no eligible issues, or issues present but outside active states
 - check whether Codex can launch
 - inspect logs and status surfaces
+- inspect the latest issue comment/workpad for the freshest blocker or access request
 - internally distinguish runtime/tracker mismatch from true inactivity so external status reports stay accurate
 - report the first real blocker, not a vague guess
 

@@ -10,6 +10,7 @@ This repo packages an OpenClaw-specific skill that teaches an agent how to:
 - create or edit a real `WORKFLOW.md`
 - run and expose the Symphony dashboard
 - monitor active Symphony runs and proactively report meaningful status changes
+- check the latest issue comment/workpad during monitoring so blocker/access notes are not missed
 - use careful internal state definitions so status reports stay accurate without forcing the user to care about runtime-vs-tracker details unless that difference matters
 - troubleshoot why Symphony is running but not actually doing development work
 

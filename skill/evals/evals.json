@@ -36,6 +36,12 @@
       "prompt": "Symphony is actively processing a ticket internally, but Linear still shows the ticket as Todo. Keep the status report simple for me, but make sure the skill's internal definition of status is careful enough that it doesn't say something false.",
       "expected_output": "Uses careful internal state definitions, defaults user-facing status to the Symphony view, and mentions the tracker mismatch only if it materially affects the conclusion or requires intervention.",
       "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "The process looks fine, but the latest issue comment says the ticket requires access. Your monitoring must catch that before you tell me there's no blocker.",
+      "expected_output": "Checks the latest issue comment/workpad as part of monitoring, surfaces the access request as the real current blocker, and does not rely only on process state or ticket state.",
+      "files": []
     }
   ]
 }
