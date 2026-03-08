@@ -1,0 +1,23 @@
+{
+  "skill_name": "symphony-dev",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Install OpenAI Symphony on this VM, make sure Codex is usable with it, and tell me what is still missing before it can actually work on my dev tickets.",
+      "expected_output": "Inspects the machine, installs or verifies Symphony and Codex, and clearly separates installed vs configured vs ready-for-real-work status.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I already have Symphony cloned. Wire it to my repository with a real WORKFLOW.md, use a workspace root under my home directory, and keep the dashboard reachable over Tailscale.",
+      "expected_output": "Creates or edits a repo-specific WORKFLOW.md, chooses practical workspace settings, and returns a concrete dashboard access path without pretending the stock demo config is enough.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Symphony starts but never picks up development work from Linear. Figure out whether the problem is tracker auth, workflow config, issue states, or Codex startup, and tell me the first real blocker.",
+      "expected_output": "Runs a troubleshooting flow against Symphony's real dependencies and surfaces the first concrete blocker instead of giving generic advice.",
+      "files": []
+    }
+  ]
+}
