@@ -19,6 +19,7 @@ Help OpenClaw turn Symphony into a usable development orchestrator on the curren
 - drafting or editing `WORKFLOW.md`
 - starting or exposing the dashboard
 - monitoring active Symphony runs after startup
+- creating cron-backed automatic follow-up when the user expects ongoing coordination
 - reporting the exact blockers to autonomous development runs
 
 ## Default posture
@@ -127,6 +128,8 @@ After startup:
 - verify the intended project and first claimable issue were actually picked up
 - capture the initial state (active issue, issue states, process status, dashboard bind)
 - create lightweight follow-up monitoring using OpenClaw-native scheduling such as `cron` when useful
+- when the user expects ongoing coordination without having to ask again, prefer creating a cron-backed monitor job instead of relying on ad-hoc manual rechecks
+- keep heartbeat-style continuity in mind: monitoring should persist as an ongoing operational responsibility, not as a one-off check
 - avoid tight polling loops; prefer a sane cadence (for example: immediate check, then 10 minutes, then every 20-30 minutes while work is active)
 
 Each monitoring pass should inspect enough state to answer:
@@ -243,6 +246,27 @@ Check the latest issue comment/workpad because it often contains the most action
 - notes about why the state has not moved yet
 
 If the latest meaningful comment changes the correct conclusion, it should override a shallow read of the runtime dashboard.
+
+### Use cron/heartbeat-friendly monitoring defaults
+
+If the user wants automatic follow-up without having to remind OpenClaw:
+- create a cron-backed monitoring job
+- make the monitor compare against a persisted previous snapshot so it only announces meaningful changes
+- keep the monitor quiet when there is no meaningful change
+- treat this as a continuity/heartbeat-style responsibility while Symphony work is active
+
+The monitor should check, at minimum:
+- Symphony runtime health
+- active issue / next issue
+- latest meaningful issue comment/workpad
+- whether the user needs to interfere
+
+The monitor should announce when:
+- a ticket completes
+- a blocker or access request appears
+- a new active ticket starts
+- Symphony becomes idle unexpectedly
+- Symphony stops or becomes unhealthy
 
 ### Troubleshoot orchestration
 
