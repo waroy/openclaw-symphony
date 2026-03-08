@@ -45,8 +45,8 @@
     },
     {
       "id": 8,
-      "prompt": "I don't want to remind you. If you're coordinating Symphony, set up automatic follow-up using OpenClaw cron and treat it like an ongoing heartbeat-style responsibility while the work is active.",
-      "expected_output": "Creates a cron-backed monitor with quiet no-change behavior, checks runtime plus latest comments/workpad, and proactively announces only meaningful changes while Symphony work is active.",
+      "prompt": "I don't want to remind you. If you're coordinating Symphony, treat it as an ongoing heartbeat/task-file responsibility, and only use cron if exact timing is actually needed.",
+      "expected_output": "Prefers heartbeat/task-file-backed continuity for ongoing Symphony supervision, keeps no-change runs quiet, checks runtime plus latest comments/workpad, and uses cron only as a supplement when stricter scheduling is required.",
       "files": []
     }
   ]

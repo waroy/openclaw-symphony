@@ -19,7 +19,8 @@ Help OpenClaw turn Symphony into a usable development orchestrator on the curren
 - drafting or editing `WORKFLOW.md`
 - starting or exposing the dashboard
 - monitoring active Symphony runs after startup
-- creating cron-backed automatic follow-up when the user expects ongoing coordination
+- creating heartbeat/task-file-backed ongoing coordination when the user expects continuous supervision
+- using cron as a supplement when exact timing matters
 - reporting the exact blockers to autonomous development runs
 
 ## Default posture
@@ -127,10 +128,11 @@ If the user expects OpenClaw to coordinate Symphony work, do not just launch Sym
 After startup:
 - verify the intended project and first claimable issue were actually picked up
 - capture the initial state (active issue, issue states, process status, dashboard bind)
-- create lightweight follow-up monitoring using OpenClaw-native scheduling such as `cron` when useful
-- when the user expects ongoing coordination without having to ask again, prefer creating a cron-backed monitor job instead of relying on ad-hoc manual rechecks
+- create lightweight follow-up monitoring using OpenClaw-native mechanisms
+- when the user expects ongoing coordination without having to ask again, prefer expressing that responsibility in heartbeat/task-file instructions so the agent re-evaluates it on wakeups
+- use `cron` when exact timing guarantees matter or when heartbeat-based supervision is not sufficient on its own
 - keep heartbeat-style continuity in mind: monitoring should persist as an ongoing operational responsibility, not as a one-off check
-- avoid tight polling loops; prefer a sane cadence (for example: immediate check, then 10 minutes, then every 20-30 minutes while work is active)
+- avoid tight polling loops; prefer sane re-check behavior rather than spammy liveness chatter
 
 Each monitoring pass should inspect enough state to answer:
 - is Symphony still running?
@@ -247,15 +249,15 @@ Check the latest issue comment/workpad because it often contains the most action
 
 If the latest meaningful comment changes the correct conclusion, it should override a shallow read of the runtime dashboard.
 
-### Use cron/heartbeat-friendly monitoring defaults
+### Use heartbeat-first monitoring defaults
 
 If the user wants automatic follow-up without having to remind OpenClaw:
-- create a cron-backed monitoring job
-- make the monitor compare against a persisted previous snapshot so it only announces meaningful changes
-- keep the monitor quiet when there is no meaningful change
-- treat this as a continuity/heartbeat-style responsibility while Symphony work is active
+- prefer encoding the responsibility in heartbeat/task-file instructions so the agent wakes up and asks itself whether anything now needs action
+- keep the monitoring quiet when there is no meaningful change
+- compare against a persisted previous snapshot when possible so repeated wakeups do not produce duplicate noise
+- use a cron-backed monitor only when exact timing matters or when you need a stronger scheduling guarantee than heartbeat alone provides
 
-The monitor should check, at minimum:
+The monitor/supervisor should check, at minimum:
 - Symphony runtime health
 - active issue / next issue
 - latest meaningful issue comment/workpad
@@ -298,6 +300,8 @@ Use internally precise state definitions, but keep user-facing status simple by 
 Unless the distinction matters, report the Symphony view as the main status and avoid dragging the user through tracker/runtime details.
 
 Mention tracker/Linear state only when it materially changes the conclusion, explains confusing behavior, or requires intervention.
+
+For ongoing coordination expectations, assume Heartbeat/task instructions are the primary continuity mechanism unless the user explicitly asks for exact scheduled timing.
 
 Use this shape when helpful:
 - status
