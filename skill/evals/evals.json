@@ -54,6 +54,12 @@
       "prompt": "The dashboard looks idle, Linear looks stale, but the latest issue comment says compile just succeeded and the ticket is about to be closed. Use the right source-of-truth order and give me the correct conclusion without overexplaining.",
       "expected_output": "Uses the latest meaningful issue comment/workpad as the primary status source, avoids being misled by lagging dashboard or tracker signals, and gives a simple correct operator conclusion.",
       "files": []
+    },
+    {
+      "id": 10,
+      "prompt": "Symphony completed an implementation ticket in a temporary workspace, but the main repo the operator builds from does not contain the changes. Fix the workflow so completed work cannot be stranded outside the canonical repo.",
+      "expected_output": "Makes the canonical repo explicit in the workflow, requires sync-back or direct canonical-repo changes before completion, and treats workspace-only completed work as a workflow failure rather than a successful implementation.",
+      "files": []
     }
   ]
 }

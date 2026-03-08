@@ -8,6 +8,7 @@ This repo packages an OpenClaw-specific skill that teaches an agent how to:
 - use a Linear API key to inspect or create the target project when permissions allow
 - wire tracker credentials and repo-specific workflow config
 - create or edit a real `WORKFLOW.md`
+- define the canonical repo path so completed code does not get stranded in temporary workspaces
 - run and expose the Symphony dashboard
 - monitor active Symphony runs and proactively report meaningful status changes
 - check the latest issue comment/workpad during monitoring so blocker/access notes are not missed

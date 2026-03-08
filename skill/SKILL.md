@@ -84,8 +84,12 @@ Draft or edit a `WORKFLOW.md` that is specific to the target repo and environmen
 - bootstrap hooks such as cloning the repo
 - Codex command and sandbox posture
 - the actual per-issue prompt body
+- the canonical source-of-truth repo path, when temporary workspaces are involved
 
 `WORKFLOW.md` should normally live in or alongside the repo / deployment path that Symphony is actually started from, not just anywhere a copy happens to exist.
+
+If Symphony uses temporary per-issue workspaces, explicitly define which repo path is canonical.
+Do not allow a ticket to be treated as complete if the real intended code exists only in a temporary workspace and has not been synchronized back to the canonical repo.
 
 If critical information is missing, ask only for the minimum missing values.
 
@@ -222,6 +226,13 @@ For a new target repo, produce a `WORKFLOW.md` that includes:
 - a prompt body that tells the agent how to work tickets in that repo
 - a real project slug when available from Linear, not a placeholder demo slug
 - realistic defaults, not placeholder values where avoidable
+- a clear rule about the canonical repo when temporary workspaces are used
+
+For implementation tickets, teach the workflow to require one of these before claiming completion:
+- changes are made directly in the canonical repo, or
+- changes are synchronized back into the canonical repo cleanly
+
+If neither happened, the ticket is not actually done.
 
 ### Provision a Linear project
 
