@@ -21,6 +21,7 @@ Help OpenClaw turn Symphony into a usable development orchestrator on the curren
 - monitoring active Symphony runs after startup
 - creating heartbeat/task-file-backed ongoing coordination when the user expects continuous supervision
 - using cron as a supplement when exact timing matters
+- reviewing Symphony outputs and routing review feedback back into Linear/Symphony when rework is needed
 - reporting the exact blockers to autonomous development runs
 
 ## Default posture
@@ -34,6 +35,13 @@ Inspect the machine and the repo before giving advice. Distinguish clearly betwe
 - **ready for real development work**
 
 Do not blur those states together.
+
+Also behave like a coordinator, not just an observer:
+- if a Symphony-produced PR needs review, you may review it yourself as the human-side reviewer
+- if that review finds changes are needed, route the fix back into Symphony via Linear rather than leaving the work stranded as a GitHub-only comment
+- when future Symphony activity is expected, set up explicit monitoring instead of assuming someone will remember to look later
+- when ongoing monitoring is required, update `HEARTBEAT.md`; do not leave heartbeat monitoring implicit
+- treat heartbeat maintenance as part of the coordinator role, not optional cleanup
 
 ## Workflow
 
@@ -61,6 +69,7 @@ Name concrete blockers explicitly when present:
 - Codex installed but not authenticated
 - Symphony process running but not loading the intended environment file
 - no eligible issues exist in the configured active states
+- PR review feedback exists but has not been routed back into an active Linear issue for Symphony to pick up
 
 ### 2. Identify the user's actual goal
 
@@ -72,6 +81,7 @@ Route the task into one of these buckets:
 - **Operate**: Symphony exists and should be started, restarted, or exposed
 - **Troubleshoot**: Symphony runs but does not claim work, start agents, or expose the dashboard correctly
 - **Design workflow**: user wants a repo-specific `WORKFLOW.md` and operating model
+- **Coordinate follow-up**: Symphony has already produced work and now needs reviewer-driven rework, monitoring, or requeueing
 
 ### 3. Build repo-specific configuration
 
@@ -165,6 +175,30 @@ Proactively update the user when there is a meaningful change:
 Do not spam the user with empty "still running" updates.
 Do not wait silently after starting a long-running autonomous workflow.
 If monitoring is requested, treat missed status reporting as a failure of coordination, not as acceptable default behavior.
+
+When ongoing monitoring is required, update `HEARTBEAT.md` with the monitoring responsibility.
+The skill should instruct OpenClaw to maintain heartbeat continuity when supervision is part of the task.
+Use cron only as a supplement when exact timing matters.
+
+### 4b. Coordinate PR review and follow-up
+
+When a Symphony-created PR exists:
+- check whether the linked Linear issue is still active or has already been marked done
+- review the PR directly if the user wants a review decision now
+- if the PR needs changes, do not stop at a GitHub review comment; also reopen the Linear issue or create a follow-up Linear issue so Symphony has a real trigger to pick the work back up
+- verify that the resulting issue is actually in an active Symphony state, not merely commented on
+- if ongoing monitoring is required, update `HEARTBEAT.md` so the coordination responsibility persists
+- state plainly whether the follow-up has been routed back into Symphony yet
+
+When a user expects Symphony to react soon:
+- verify the triggering issue is actually in an active state
+- verify the running Symphony instance is pointed at the right project/workflow
+- add explicit monitoring when appropriate:
+  - update `HEARTBEAT.md` for recurring watch tasks; do not leave heartbeat monitoring implicit
+  - use a scheduled recheck/reminder for short one-off follow-up windows
+- after setting monitoring, tell the user exactly what will be watched and what condition counts as success or a blocker
+
+When you change the expected Symphony operating loop (for example PR review follow-up, issue pickup expectations, or active troubleshooting watch), update `HEARTBEAT.md` if ongoing monitoring is warranted. Treat heartbeat maintenance as part of the coordinator role, not an optional extra.
 
 ### 5. Report readiness honestly
 
@@ -262,6 +296,7 @@ If the user wants automatic follow-up without having to remind OpenClaw:
 - keep the monitoring quiet when there is no meaningful change
 - compare against a persisted previous snapshot when possible so repeated wakeups do not produce duplicate noise
 - use a cron-backed monitor only when exact timing matters or when you need a stronger scheduling guarantee than heartbeat alone provides
+- when ongoing monitoring is required, update `HEARTBEAT.md`
 
 Decision rule:
 - Heartbeat/task file = ongoing agent responsibility
@@ -279,6 +314,7 @@ The monitor should announce when:
 - a new active ticket starts
 - Symphony becomes idle unexpectedly
 - Symphony stops or becomes unhealthy
+- PR review feedback has not yet been routed back into an active Symphony issue
 
 ### Troubleshoot orchestration
 

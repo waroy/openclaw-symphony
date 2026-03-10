@@ -54,6 +54,24 @@
       "prompt": "The dashboard looks idle, Linear looks stale, but the latest issue comment says compile just succeeded and the ticket is about to be closed. Use the right source-of-truth order and give me the correct conclusion without overexplaining.",
       "expected_output": "Uses the latest meaningful issue comment/workpad as the primary status source, avoids being misled by lagging dashboard or tracker signals, and gives a simple correct operator conclusion.",
       "files": []
+    },
+    {
+      "id": 10,
+      "prompt": "I reviewed a Symphony-created PR and left a blocking review comment. Don't just stop there — route the changes back into Symphony, make sure the follow-up issue is active in Linear, and update heartbeat if continued monitoring is required.",
+      "expected_output": "Treats PR review as coordinator work, reopens or creates the right Linear follow-up for Symphony, verifies the issue is in an active state, and updates HEARTBEAT.md when ongoing monitoring is warranted.",
+      "files": []
+    },
+    {
+      "id": 11,
+      "prompt": "A Symphony ticket was marked Done, but later the PR review found a regression. I need you to coordinate the rework properly instead of assuming GitHub feedback alone will wake Symphony back up.",
+      "expected_output": "Explains that GitHub review alone is not a reliable trigger, routes the rework into an active Linear issue, and makes the supervision path explicit.",
+      "files": []
+    },
+    {
+      "id": 12,
+      "prompt": "Ongoing monitoring is required here. Update the skill-driven coordination path so heartbeat is treated as required, not optional, whenever Symphony follow-up needs continued supervision.",
+      "expected_output": "Makes HEARTBEAT.md maintenance an explicit required action when ongoing Symphony monitoring is part of the task, rather than leaving it implied.",
+      "files": []
     }
   ]
 }
