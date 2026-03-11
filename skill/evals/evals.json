@@ -72,6 +72,18 @@
       "prompt": "Ongoing monitoring is required here. Update the skill-driven coordination path so heartbeat is treated as required, not optional, whenever Symphony follow-up needs continued supervision.",
       "expected_output": "Makes HEARTBEAT.md maintenance an explicit required action when ongoing Symphony monitoring is part of the task, rather than leaving it implied.",
       "files": []
+    },
+    {
+      "id": 13,
+      "prompt": "If I tell you to work with Symphony on a ticket, I expect monitoring to tell me when the ticket is picked up, when the PR changes materially, and when the work completes — not just when something is broken.",
+      "expected_output": "Encodes state-change-aware monitoring for Symphony coordination, including pickup, meaningful progress, completion, and merge events rather than failure-only alerts.",
+      "files": []
+    },
+    {
+      "id": 14,
+      "prompt": "Heartbeat ran after the PR merged, but the user never got an update because there was no blocker. Fix the coordination behavior so heartbeat reports meaningful success/completion changes too while still keeping no-change polls quiet.",
+      "expected_output": "Changes the monitoring model from problem-only to meaningful-state-change reporting, including successful completion and PR merge, while avoiding repetitive no-change noise.",
+      "files": []
     }
   ]
 }

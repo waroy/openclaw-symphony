@@ -40,6 +40,7 @@ Also behave like a coordinator, not just an observer:
 - if a Symphony-produced PR needs review, you may review it yourself as the human-side reviewer
 - if that review finds changes are needed, route the fix back into Symphony via Linear rather than leaving the work stranded as a GitHub-only comment
 - when future Symphony activity is expected, set up explicit monitoring instead of assuming someone will remember to look later
+- when coordinating Symphony work for the user, monitoring should report meaningful state changes (picked up, blocked, completed, PR opened/updated/merged, decision needed), not only failure conditions
 - when ongoing monitoring is required, update `HEARTBEAT.md`; do not leave heartbeat monitoring implicit
 - treat heartbeat maintenance as part of the coordinator role, not optional cleanup
 
@@ -196,9 +197,18 @@ When a user expects Symphony to react soon:
 - add explicit monitoring when appropriate:
   - update `HEARTBEAT.md` for recurring watch tasks; do not leave heartbeat monitoring implicit
   - use a scheduled recheck/reminder for short one-off follow-up windows
-- after setting monitoring, tell the user exactly what will be watched and what condition counts as success or a blocker
+- after setting monitoring, tell the user exactly what will be watched and what condition counts as success, progress, completion, or a blocker
 
-When you change the expected Symphony operating loop (for example PR review follow-up, issue pickup expectations, or active troubleshooting watch), update `HEARTBEAT.md` if ongoing monitoring is warranted. Treat heartbeat maintenance as part of the coordinator role, not an optional extra.
+When you change the expected Symphony operating loop (for example PR review follow-up, issue pickup expectations, active troubleshooting watch, or a run that should report completion), update `HEARTBEAT.md` if ongoing monitoring is warranted. Treat heartbeat maintenance as part of the coordinator role, not an optional extra.
+
+Heartbeat-backed Symphony monitoring should be state-change aware, not problem-only. When ongoing monitoring is required, encode notification conditions for meaningful changes such as:
+- issue picked up by Symphony
+- issue stalled or blocked
+- issue moved to done/canceled
+- PR opened or materially updated
+- PR merged
+- decision needed from the user
+Keep no-change polls quiet, but do not stay silent on successful completion when the user asked OpenClaw to coordinate the work.
 
 ### 5. Report readiness honestly
 
