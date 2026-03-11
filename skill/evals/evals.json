@@ -21,68 +21,14 @@
     },
     {
       "id": 4,
-      "prompt": "I already have a valid LINEAR_API_KEY on this machine. Create the Linear project for my app if permissions allow, tell me the exact project slug, and wire Symphony to use it instead of making me do the setup manually.",
-      "expected_output": "Uses the available Linear API access to inspect teams, create or confirm the target project when permitted, returns the exact slug, and updates the Symphony wiring accordingly instead of stopping at generic instructions.",
+      "prompt": "I told you the Symphony-delivered FitForm work is still wrong: the exercise library is limited and not showing all the expected JSON-backed exercises. Reopen the issue and coordinate the rework.",
+      "expected_output": "Treats the user's defect report as immediate coordination input, reopens or routes the ticket back into the tracker, captures the concrete feedback in actionable form, and sets monitoring without waiting for a second explicit instruction.",
       "files": []
     },
     {
       "id": 5,
-      "prompt": "You are coordinating Symphony for me, not just launching it. Start the workflow, monitor it with OpenClaw-native follow-up checks, and proactively tell me when a ticket completes, gets blocked, or needs my decision.",
-      "expected_output": "Treats monitoring as part of the task, sets up sane follow-up checks instead of a tight poll loop, and reports meaningful state changes without waiting for the user to ask.",
-      "files": []
-    },
-    {
-      "id": 6,
-      "prompt": "Symphony is actively processing a ticket internally, but Linear still shows the ticket as Todo. Keep the status report simple for me, but make sure the skill's internal definition of status is careful enough that it doesn't say something false.",
-      "expected_output": "Uses careful internal state definitions, defaults user-facing status to the Symphony view, and mentions the tracker mismatch only if it materially affects the conclusion or requires intervention.",
-      "files": []
-    },
-    {
-      "id": 7,
-      "prompt": "The process looks fine, but the latest issue comment says the ticket requires access. Your monitoring must catch that before you tell me there's no blocker.",
-      "expected_output": "Checks the latest issue comment/workpad as part of monitoring, surfaces the access request as the real current blocker, and does not rely only on process state or ticket state.",
-      "files": []
-    },
-    {
-      "id": 8,
-      "prompt": "I don't want to remind you. If you're coordinating Symphony, treat it as an ongoing heartbeat/task-file responsibility, and only use cron if exact timing is actually needed.",
-      "expected_output": "Prefers heartbeat/task-file-backed continuity for ongoing Symphony supervision, keeps no-change runs quiet, checks runtime plus latest comments/workpad, and uses cron only as a supplement when stricter scheduling is required.",
-      "files": []
-    },
-    {
-      "id": 9,
-      "prompt": "The dashboard looks idle, Linear looks stale, but the latest issue comment says compile just succeeded and the ticket is about to be closed. Use the right source-of-truth order and give me the correct conclusion without overexplaining.",
-      "expected_output": "Uses the latest meaningful issue comment/workpad as the primary status source, avoids being misled by lagging dashboard or tracker signals, and gives a simple correct operator conclusion.",
-      "files": []
-    },
-    {
-      "id": 10,
-      "prompt": "I reviewed a Symphony-created PR and left a blocking review comment. Don't just stop there — route the changes back into Symphony, make sure the follow-up issue is active in Linear, and update heartbeat if continued monitoring is required.",
-      "expected_output": "Treats PR review as coordinator work, reopens or creates the right Linear follow-up for Symphony, verifies the issue is in an active state, and updates HEARTBEAT.md when ongoing monitoring is warranted.",
-      "files": []
-    },
-    {
-      "id": 11,
-      "prompt": "A Symphony ticket was marked Done, but later the PR review found a regression. I need you to coordinate the rework properly instead of assuming GitHub feedback alone will wake Symphony back up.",
-      "expected_output": "Explains that GitHub review alone is not a reliable trigger, routes the rework into an active Linear issue, and makes the supervision path explicit.",
-      "files": []
-    },
-    {
-      "id": 12,
-      "prompt": "Ongoing monitoring is required here. Update the skill-driven coordination path so heartbeat is treated as required, not optional, whenever Symphony follow-up needs continued supervision.",
-      "expected_output": "Makes HEARTBEAT.md maintenance an explicit required action when ongoing Symphony monitoring is part of the task, rather than leaving it implied.",
-      "files": []
-    },
-    {
-      "id": 13,
-      "prompt": "If I tell you to work with Symphony on a ticket, I expect monitoring to tell me when the ticket is picked up, when the PR changes materially, and when the work completes — not just when something is broken.",
-      "expected_output": "Encodes state-change-aware monitoring for Symphony coordination, including pickup, meaningful progress, completion, and merge events rather than failure-only alerts.",
-      "files": []
-    },
-    {
-      "id": 14,
-      "prompt": "Heartbeat ran after the PR merged, but the user never got an update because there was no blocker. Fix the coordination behavior so heartbeat reports meaningful success/completion changes too while still keeping no-change polls quiet.",
-      "expected_output": "Changes the monitoring model from problem-only to meaningful-state-change reporting, including successful completion and PR merge, while avoiding repetitive no-change noise.",
+      "prompt": "I already told you what is wrong with the Symphony result. As coordinator, you should route that feedback back into Linear and tell me what you'll monitor next.",
+      "expected_output": "Behaves like a coordinator by turning the user's review comments into tracker follow-up and explicit monitoring, instead of merely inviting the user to restate the same issue.",
       "files": []
     }
   ]
