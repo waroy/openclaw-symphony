@@ -185,6 +185,7 @@ When a user expects Symphony to react soon:
 - add explicit monitoring when appropriate:
   - update `HEARTBEAT.md` for recurring watch tasks; do not leave heartbeat monitoring implicit
   - use a scheduled recheck/reminder for short one-off follow-up windows
+  - when you create a short-lived cron/recheck job for a specific Symphony follow-up, remove it once the watched issue/run reaches its terminal outcome or the follow-up window has clearly ended; do not leave one-off monitor jobs running after completion
 - after setting monitoring, tell the user exactly what will be watched and what condition counts as success, progress, completion, or a blocker
 
 When you change the expected Symphony operating loop (for example PR review follow-up, issue pickup expectations, active troubleshooting watch, or a run that should report completion), update `HEARTBEAT.md` if ongoing monitoring is warranted. Treat heartbeat maintenance as part of the coordinator role, not an optional extra.
